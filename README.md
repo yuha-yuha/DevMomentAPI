@@ -1,6 +1,6 @@
 # DevMomentAPI
 this makes json API server from json format. 
-## Use age
+## USAGE
 Write json moment api format `/helper/json_parser.go` at the now.
  
 ```
