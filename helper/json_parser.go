@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-type JsonAPIFormat struct {
+type DevMomentAPIFormat struct {
 	UserDefineAPIs []UserDefineAPI `json:"apis"`
 }
 
@@ -16,11 +16,11 @@ type UserDefineAPI struct {
 	Response map[string]interface{} `json:"response"`
 }
 
-func JsonParse() JsonAPIFormat {
+func JsonParse() DevMomentAPIFormat {
 
 	data := ImportFileData("./sample.json")
 
-	jaf := JsonAPIFormat{}
+	jaf := DevMomentAPIFormat{}
 
 	json.Unmarshal(data, &jaf)
 

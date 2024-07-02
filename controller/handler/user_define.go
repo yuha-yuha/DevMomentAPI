@@ -12,7 +12,7 @@ type UserDefineHandler struct {
 	HandlerFunc http.HandlerFunc
 }
 
-func GetUserDefineHandlers(jaf helper.JsonAPIFormat) []UserDefineHandler {
+func GetUserDefineHandlers(jaf helper.DevMomentAPIFormat) []UserDefineHandler {
 	userDefHandlers := []UserDefineHandler{}
 	for _, UserDefineAPI := range jaf.UserDefineAPIs {
 		handlerFunc := func(w http.ResponseWriter, r *http.Request) {
