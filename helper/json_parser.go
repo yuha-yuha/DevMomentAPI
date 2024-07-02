@@ -1,6 +1,11 @@
 package helper
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"io"
+	"log"
+	"os"
+)
 
 type JsonAPIFormat struct {
 	UserDefineAPIs []UserDefineAPI `json:"apis"`
@@ -12,27 +17,29 @@ type UserDefineAPI struct {
 }
 
 func JsonParse() JsonAPIFormat {
-	s :=
-		`{"apis":[
-		{
-			"path":"/hoge",
-			"response": {
-				"message":"hello"
-			}
-		},
-		{
-			"path":"/def",
-			"response": {
-				"message":"aiueo"
-			}
-		}
-	]}`
 
-	sb := []byte(s)
+	data := ImportFileData("./sample.json")
 
 	jaf := JsonAPIFormat{}
 
-	json.Unmarshal(sb, &jaf)
+	json.Unmarshal(data, &jaf)
 
 	return jaf
+}
+
+func ImportFileData(path string) []byte {
+	file, err := os.Open(path)
+
+	if err != nil {
+		log.Panic(err)
+	}
+
+	file.Stat()
+	byteData, err := io.ReadAll(file)
+
+	if err != nil {
+		log.Panic(err)
+	}
+
+	return byteData
 }
