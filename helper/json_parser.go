@@ -31,12 +31,19 @@ func JsonParse() DevMomentAPIFormat {
 	return jaf
 }
 
-func ModelIntoResponseJson(dmaf *DevMomentAPIFormat) {
+func ModelUnpackforResponseJson(dmaf *DevMomentAPIFormat) {
+	for modelName, userDefineModel := range dmaf.UserDefineModels {
+		for fieldName, modelField := range userDefineModel {
+			ValueIsMap(&modelField, dmaf.UserDefineModels)
+			userDefineModel[fieldName] = modelField
+		}
+
+		dmaf.UserDefineModels[modelName] = userDefineModel
+	}
 	for i := range dmaf.UserDefineAPIs {
 		UserDefineAPI := &dmaf.UserDefineAPIs[i]
 		ValueIsMap(&UserDefineAPI.Response, dmaf.UserDefineModels)
 	}
-
 }
 
 func ValueIsMap(v *interface{}, models map[string]map[string]interface{}) {
