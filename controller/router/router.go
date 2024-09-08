@@ -4,15 +4,15 @@ import (
 	"net/http"
 
 	"github.com/yuha-yuha/DevMomentAPI/controller/handler"
-	"github.com/yuha-yuha/DevMomentAPI/helper"
+	"github.com/yuha-yuha/DevMomentAPI/lib"
 )
 
 func Get() *http.ServeMux {
 	mux := http.NewServeMux()
-
-	uds := handler.GetUserDefineHandlers(helper.JsonParse())
-	for _, ud := range uds {
-		mux.Handle(ud.Path, ud.HandlerFunc)
+	udHandlers := handler.CreateUserDefineHandler(lib.GetUserDefineAPIs(), lib.GetUserDefineModels())
+	//udHandlers2 := handler.GetUserDefineHandlers(lib.JsonParse())
+	for _, udh := range udHandlers {
+		mux.Handle(udh.Path, udh.HandlerFunc)
 	}
 
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
