@@ -3,15 +3,15 @@ package main
 import (
 	"net/http"
 
-	"github.com/yuha-yuha/DevMomentAPI/controller/router"
+	"github.com/yuha-yuha/DevMomentAPI/controllers/router"
 )
 
 func main() {
 
-	mux := router.Get()
+	mux := router.Get("./sample.json")
 
 	server := http.Server{
-		Addr:    ":8081",
+		Addr:    ":8080",
 		Handler: mux,
 	}
 
