@@ -1,40 +1,16 @@
-package handler
+package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
-	"github.com/yuha-yuha/DevMomentAPI/lib"
 	"github.com/yuha-yuha/DevMomentAPI/models"
+	"github.com/yuha-yuha/DevMomentAPI/services"
 )
 
 type UserDefineHandler struct {
 	Path        string `json:"path"`
 	HandlerFunc http.HandlerFunc
-}
-
-func GetUserDefineHandlers(jaf lib.DevMomentAPIFormat) []UserDefineHandler {
-	userDefHandlers := []UserDefineHandler{}
-	lib.ModelUnpackforResponseJson(&jaf)
-
-	for _, UserDefineAPI := range jaf.UserDefineAPIs {
-		log.Println(UserDefineAPI.Response)
-		handlerFunc := func(w http.ResponseWriter, r *http.Request) {
-			w.Header().Set("Content-Type", "application/json; charset=utf-8")
-			jsonenc := json.NewEncoder(w)
-			jsonenc.Encode(UserDefineAPI.Response)
-		}
-
-		userDefHandler := UserDefineHandler{
-			Path:        UserDefineAPI.Path,
-			HandlerFunc: handlerFunc,
-		}
-
-		userDefHandlers = append(userDefHandlers, userDefHandler)
-	}
-
-	return userDefHandlers
 }
 
 func CreateUserDefineHandler(apis []models.UserDefineAPI, userDefineModels []models.UserDefineModel) []UserDefineHandler {
@@ -43,7 +19,7 @@ func CreateUserDefineHandler(apis []models.UserDefineAPI, userDefineModels []mod
 	for _, api := range apis {
 		apiPointers = append(apiPointers, &api)
 	}
-	lib.ModelUnpackforResponseJsonV2(apiPointers, userDefineModels)
+	services.ModelUnpackforResponseJson(apiPointers, userDefineModels)
 
 	for _, api := range apiPointers {
 		handlerFunc := func(w http.ResponseWriter, r *http.Request) {
