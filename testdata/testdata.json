@@ -1,0 +1,31 @@
+{
+    "apis":[
+        {
+            "path": "/huga",
+            "response": {
+                "current_user":"${user}",
+                "newProduct":"${product}",
+                "count":123
+            }
+        },
+
+        {
+            "path": "/hoge",
+            "response": {
+                "aaaa": "ssss"
+            }
+        }
+    ],
+
+    "models":{
+        "user": {
+            "name":"ya",
+            "id":"12345"
+        },
+
+        "product": {
+            "user":"${user}",
+            "name":"どら焼き"
+        }
+    }
+}
