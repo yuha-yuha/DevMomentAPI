@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/yuha-yuha/DevMomentAPI/controllers/router"
@@ -15,5 +16,6 @@ func main() {
 		Handler: mux,
 	}
 
+	fmt.Print("Running Server!!\n\n")
 	server.ListenAndServe()
 }
