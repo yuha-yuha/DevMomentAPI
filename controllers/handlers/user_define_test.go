@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/yuha-yuha/DevMomentAPI/controllers/handlers"
 	"github.com/yuha-yuha/DevMomentAPI/models"
+	"github.com/yuha-yuha/DevMomentAPI/services"
 )
 
 func TestCreateUserDefineHandler(t *testing.T) {
@@ -16,11 +17,15 @@ func TestCreateUserDefineHandler(t *testing.T) {
 		{Path: "/hoge", Response: map[string]interface{}{"hello": "world"}},
 		{Path: "/huga", Response: map[string]interface{}{"user": "${user}"}},
 	}
+
+	for _, api := range apis {
+		services.AddUserDefineAPI(api)
+	}
 	defineModels := []models.UserDefineModel{
 		{Name: "user", Content: map[string]interface{}{"name": "alice", "age": 18}},
 	}
 
-	defineHandlers := handlers.CreateUserDefineHandler(apis, defineModels)
+	defineHandlers := handlers.CreateUserDefineHandler(services.GetUserDefineAPIMap(), defineModels)
 
 	case1, _ := json.Marshal(map[string]interface{}{
 		"hello": "world",

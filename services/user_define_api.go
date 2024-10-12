@@ -7,15 +7,43 @@ import (
 	"github.com/yuha-yuha/DevMomentAPI/models"
 )
 
-func GetUserDefineAPIs(filePath string) []models.UserDefineAPI {
+var UserDefineAPIMap map[string][]models.UserDefineAPI
+
+func SubscribeUserDefineAPIs(filePath string) {
 	data := lib.ImportFileData(filePath)
 	fileFormat := lib.FileFormat{}
-	userDefineAPIs := []models.UserDefineAPI{}
 
 	json.Unmarshal(data, &fileFormat)
 
 	for _, api := range fileFormat.APIsFormat {
-		userDefineAPIs = append(userDefineAPIs, models.UserDefineAPI{Path: api.Path, Response: api.Response})
+		if api.Method == "" {
+			api.Method = "GET"
+		}
+		AddUserDefineAPI(models.UserDefineAPI{Path: api.Path, Response: api.Response, Method: api.Method})
 	}
-	return userDefineAPIs
+
+}
+
+func FindUserDefineAPIByPath(path string) []models.UserDefineAPI {
+	return UserDefineAPIMap[path]
+}
+
+func AddUserDefineAPI(ud models.UserDefineAPI) {
+	if UserDefineAPIMap == nil {
+		UserDefineAPIMap = make(map[string][]models.UserDefineAPI)
+	}
+	UserDefineAPIMap[ud.Path] = append(UserDefineAPIMap[ud.Path], ud)
+}
+
+func GetAllUserDefineAPIs() []models.UserDefineAPI {
+	allApis := []models.UserDefineAPI{}
+	for _, apis := range UserDefineAPIMap {
+		allApis = append(allApis, apis...)
+	}
+
+	return allApis
+}
+
+func GetUserDefineAPIMap() map[string][]models.UserDefineAPI {
+	return UserDefineAPIMap
 }

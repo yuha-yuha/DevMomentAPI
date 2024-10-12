@@ -9,7 +9,8 @@ import (
 )
 
 func TestGetUserDefineAPIs(t *testing.T) {
-	apis := services.GetUserDefineAPIs("../testdata/testdata.json")
+	services.SubscribeUserDefineAPIs("../testdata/testdata.json")
+	apis := services.GetAllUserDefineAPIs()
 
 	expected := []models.UserDefineAPI{
 		{Path: "/huga", Response: map[string]interface{}{
