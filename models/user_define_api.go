@@ -3,6 +3,6 @@ package models
 type UserDefineAPI struct {
 	Path     string
 	Method   string
-	Header   string
+	Header   map[string]string
 	Response interface{}
 }

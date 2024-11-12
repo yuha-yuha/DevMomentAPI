@@ -30,6 +30,23 @@ func CreateUserDefineHandler(apiMaps map[string][]models.UserDefineAPI, userDefi
 			for _, api := range apis {
 				if strings.EqualFold(api.Method, r.Method) {
 					w.Header().Set("Content-Type", "application/json; charset=utf-8")
+
+					if api.Header != nil && r.Header != nil {
+						for hk, hv := range api.Header {
+							if rhv, ok := r.Header[hk]; ok {
+								if rhv[0] != hv {
+									w.WriteHeader(400)
+									return
+								}
+							} else {
+								w.WriteHeader(400)
+								return
+							}
+						}
+					} else if api.Header != nil && r.Header == nil {
+						w.WriteHeader(400)
+						return
+					}
 					jsonenc := json.NewEncoder(w)
 					jsonenc.Encode(api.Response)
 				}

@@ -19,7 +19,7 @@ func SubscribeUserDefineAPIs(filePath string) {
 		if api.Method == "" {
 			api.Method = "GET"
 		}
-		AddUserDefineAPI(models.UserDefineAPI{Path: api.Path, Response: api.Response, Method: api.Method})
+		AddUserDefineAPI(models.UserDefineAPI{Path: api.Path, Response: api.Response, Method: api.Method, Header: api.Header})
 	}
 
 }
