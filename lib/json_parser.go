@@ -9,8 +9,10 @@ import (
 
 type FileFormat struct {
 	APIsFormat []struct {
-		Path     string      `json:"path"`
-		Response interface{} `json:"response"`
+		Path     string            `json:"path"`
+		Method   string            `json:"method"`
+		Header   map[string]string `json:"header"`
+		Response interface{}       `json:"response"`
 	} `json:"apis"`
 
 	ModelsFormat map[string]map[string]interface{} `json:"models"`
