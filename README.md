@@ -1,5 +1,8 @@
 # DevMomentAPI
-this makes json API server from json format. 
+
+## overview
+ this is mockAPI tool. 
+ write API specification to Json file
 ## USAGE
 Write json moment api format `./sample.json` at the now.
  
@@ -8,6 +11,7 @@ Write json moment api format `./sample.json` at the now.
     apis:[
         {
             path:"/hoge",
+            method: "GET",
             response: {
                 "message":"json"
             }
@@ -16,7 +20,18 @@ Write json moment api format `./sample.json` at the now.
 }
 ```
 
-### 式展開
+next, execution this command
+`go run main.go ./sample.json`
+
+Access localhost:8080/hoge GET method
+```
+curl localhost:8080/hoge
+{"message":"json"}
+```
+
+
+
+### model expantion
 
 ```
 {
@@ -33,11 +48,4 @@ Write json moment api format `./sample.json` at the now.
         "user": {"name": "hoge"}
     }
 }
-```
-
-this json is 
-Access localhost:8080/hoge
-```
-curl localhost:8080/hoge
-{"message":"json"}
 ```
