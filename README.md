@@ -1,38 +1,44 @@
 # DevMomentAPI
 
 ## overview
- this is mockAPI tool. 
- write API specification to Json file
+このプロダクトはモックAPIを簡易的に立てることのできるCLIツールです。
+
 ## USAGE
-Write json moment api format `./sample.json` at the now.
- 
-```
+任意のディレクトリに、モックしたいAPIの内容をjson形式でファイルに記述してください。
+
+|key|content| 
+----|---------
+|apis|モックするAPIのまとまり(Array)|
+|apis[n].path|APIのpath|
+|apis[n].method|期待するリクエスト種類|
+|apis[n].response|APIが返すresponseデータ(一般的に使われるJSONのvalueであればなんでも良い)|
+
+``` sample.json
 {
-    apis:[
+    "apis":[
         {
-            path:"/hoge",
-            method: "GET",
-            response: {
+            "path":"/hoge",
+            "method": "GET",
+            "response": {
                 "message":"json"
             }
         }
     ]
 }
 ```
-
-next, execution this command
+作成したファイルを元にmockAPIを作成するには以下のようなコマンドを叩いてください
+ファイルは実行ディレクトリからの相対パスです
 `go run main.go ./sample.json`
 
-Access localhost:8080/hoge GET method
+
+実際にlocalhostにリクエストを送ると設定した通りのmockAPIのデータが返ってきます。
 ```
 curl localhost:8080/hoge
 {"message":"json"}
 ```
 
-
-
 ### model expantion
-
+頻繁に使うデータをモデリングして展開をすることができます。
 ```
 {
     apis:[
