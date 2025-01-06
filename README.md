@@ -6,6 +6,7 @@
 ## USAGE
 任意のディレクトリに、モックしたいAPIの内容をjson形式でファイルに記述してください。
 
+
 |key|content| 
 ----|---------
 |apis|モックするAPIのまとまり(Array)|
@@ -55,3 +56,10 @@ curl localhost:8080/hoge
     }
 }
 ```
+
+
+### 工夫したコード
+modelの展開を行う際にapis.responseのjson階層を把握する必要があった
+responseの値は実際には`interface{}`型として扱っているため、interface{}が実際には何の型か判断しながら階層を下まで深ぼっていく回帰関数を定義した
+
+
