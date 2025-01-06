@@ -61,5 +61,4 @@ curl localhost:8080/hoge
 ### 工夫したコード
 modelの展開を行う際にapis.responseのjson階層を把握する必要があった
 responseの値は実際には`interface{}`型として扱っているため、interface{}が実際には何の型か判断しながら階層を下まで深ぼっていく回帰関数を定義した
-
-
+https://github.com/yuha-yuha/DevMomentAPI/blob/main/services/model_unpack_for_response_json.go#L23
